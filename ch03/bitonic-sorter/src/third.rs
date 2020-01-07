@@ -1,4 +1,5 @@
 use super::SortOrder;
+use std::cmp::Ordering;
 
 pub fn sort<T: Ord>(x: &mut [T], order: &SortOrder) -> Result<(), String> {
   if x.len().is_power_of_two() {
@@ -6,6 +7,21 @@ pub fn sort<T: Ord>(x: &mut [T], order: &SortOrder) -> Result<(), String> {
       SortOrder::Ascending => do_sort(x, true),
       SortOrder::Descending => do_sort(x, false),
     }
+    Ok(())
+  } else {
+    Err(format!(
+      "The length of x is not a power of two. (x.len(): {}",
+      x.len()
+    ))
+  }
+}
+
+pub fn sort_by<T, F>(x: &mut [T], comparator: &F) -> Result<(), String>
+where
+  F: Fn(&T, &T) -> Ordering,
+{
+  if x.len().is_power_of_two() {
+    do_sort(x, true, comparator);
     Ok(())
   } else {
     Err(format!(
@@ -44,7 +60,7 @@ fn compare_and_swap<T: Ord>(x: &mut [T], up: bool) {
 
 #[cfg(test)]
 mod tests {
-  use super::{is_power_of_two, sort, sort_by};
+  use super::{sort, sort_by};
   use crate::SortOrder::*;
 
   #[test]
