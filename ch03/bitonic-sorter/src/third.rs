@@ -116,36 +116,36 @@ mod tests {
         "with"
       ]
     );
+  }
 
-    #[test]
-    fn sort_str_descending() {
-      let mut x = vec![
-        "Rust",
+  #[test]
+  fn sort_str_descending() {
+    let mut x = vec![
+      "Rust",
+      "is",
+      "fast",
+      "and",
+      "memory-efficient",
+      "with",
+      "no",
+      "GC",
+    ];
+    assert_eq!(sort(&mut x, &Descending), Ok(()));
+    assert_eq!(
+      x,
+      vec![
+        "with",
+        "no",
+        "memory-efficient",
         "is",
         "fast",
         "and",
-        "memory-efficient",
-        "with",
-        "no",
-        "GC",
-      ];
-      assert_eq!(sort(&mut x, &Descending), Ok(()));
-      assert_eq!(
-        x,
-        vec![
-          "with",
-          "no",
-          "memory-efficient",
-          "is",
-          "fast",
-          "and",
-          "Rust",
-          "GC"
-        ]
-      )
-    }
+        "Rust",
+        "GC"
+      ]
+    )
   }
-
+  #[derive(Debug, PartialEq)]
   struct Student {
     first_name: String,
     last_name: String,
