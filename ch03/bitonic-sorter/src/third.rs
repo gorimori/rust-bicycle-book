@@ -31,7 +31,10 @@ where
   }
 }
 
-fn do_sort<T: Ord>(x: &mut [T], up: bool) {
+fn do_sort<T, F>(x: &mut [T], up: bool, comparator: &F)
+where
+  F: Fn(&T, &T) -> Ordering,
+{
   if x.len() > 1 {
     let mid_point = x.len() / 2;
     do_sort(&mut x[..mid_point], true);
